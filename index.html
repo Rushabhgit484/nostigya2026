@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nostalgia 2026 | The Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-frame: #d4af37;
+            --ink-color: #2c1e14; 
+            --magic-glow: rgba(212, 175, 55, 0.4);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* LOGIN SCREEN WITH DEPTH */
+        #login-screen {
+            position: fixed;
+            width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('Screenshot 2026-02-19 092616.png') no-repeat center center/cover;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ui-box { 
+            text-align: center; color: white; padding: 50px; 
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--gold-frame);
+            border-radius: 2px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px var(--magic-glow);
+        }
+
+        h1 { font-size: 1.5rem; letter-spacing: 5px; margin-bottom: 30px; color: var(--gold-frame); }
+
+        input { 
+            display: block; width: 280px; padding: 15px; margin: 20px auto; 
+            border: 1px solid rgba(212, 175, 55, 0.3); 
+            background: rgba(255,255,255,0.05); color: white; 
+            text-align: center; font-family: 'Cinzel'; outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--gold-frame); background: rgba(255,255,255,0.1); }
+
+        button { 
+            width: 180px; padding: 12px; border: 1px solid var(--gold-frame); 
+            background: var(--gold-frame); color: black; cursor: pointer; 
+            font-family: 'Cinzel'; font-weight: bold; letter-spacing: 2px;
+            transition: 0.4s;
+        }
+        button:hover { background: transparent; color: var(--gold-frame); box-shadow: 0 0 15px var(--gold-frame); }
+
+        /* PORTAL & BACKGROUNDS */
+        #dynamic-bg {
+            position: fixed; width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #4b0082);
+            background-size: 400% 400%;
+            display: none; z-index: 1;
+        }
+
+        #portal-container {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90vw; height: 85vh; max-width: 1200px;
+            border: 12px solid #1a1a1a;
+            outline: 2px solid var(--gold-frame);
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+            background: #000; z-index: 10;
+            overflow: hidden; display: none;
+        }
+
+        .video-content {
+            width: 100%; height: 100%;
+            object-fit: cover; position: absolute; top: 0; left: 0;
+        }
+
+        #magic-screen { z-index: 11; display: none; opacity: 0; transition: opacity 2s ease; }
+
+        /* TEXT ANIMATION AREA */
+        .frame-container {
+            width: 100%; height: 100%;
+            background: url('image_0f0944.jpg') no-repeat center center/contain;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            position: relative; z-index: 13;
+        }
+
+        .message-box {
+            width: 70%; max-width: 450px;
+            text-align: center; margin-top: -131px;
+        }
+
+        .line {
+            display: block; font-size: 0.9rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px;
+            color: var(--ink-color); opacity: 0;
+            margin-bottom: 8px; line-height: 1.4;
+        }
+
+        .user-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.8rem; display: block;
+            margin: 10px 0; color: #1a0f08; opacity: 0;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.2);
+        }
+
+        @keyframes fadeInLine {
+            from { opacity: 0; filter: blur(5px); transform: translateY(10px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dynamic-bg"></div>
+
+    <div id="login-screen">
+        <div class="ui-box">
+            <h1>Enter your Name</h1>
+            <input type="text" id="nameInput" placeholder="ENTER YOUR NAME" autocomplete="off">
+            <button onclick="revealMagic()">Open</button>
+        </div>
+    </div>
+
+    <div id="portal-container">
+        <video id="transition-reel" class="video-content" playsinline>
+            <source src="VN20260220_191332.mp4" type="video/mp4">
+        </video>
+
+        <div id="magic-screen" class="video-content">
+            <video id="bg-video" class="video-content" loop muted playsinline>
+                <source src="Add_magic_effect_202602231410_t1mk6.mp4" type="video/mp4">
+            </video>
+            <div class="frame-container">
+                <div class="message-box">
+                    <span class="line" id="l1"></span>
+                    <span id="displayName" class="user-name"></span>
+                    <span class="line" id="l2"></span>
+                    <span class="line" id="l3"></span>
+                    <span class="line" id="l4"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function revealMagic() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (name === "") return alert("The Archive requires a name to unlock.");
+
+            document.getElementById('displayName').innerText = name;
+
+            const login = document.getElementById('login-screen');
+            const bg = document.getElementById('dynamic-bg');
+            const portal = document.getElementById('portal-container');
+            const reel = document.getElementById('transition-reel');
+            const magicScreen = document.getElementById('magic-screen');
+            const bgVideo = document.getElementById('bg-video');
+
+            login.style.opacity = '0';
+            
+            setTimeout(() => {
+                login.style.display = 'none';
+                bg.style.display = 'block';
+                bg.style.animation = "gradientMove 10s ease infinite";
+                portal.style.display = 'block';
+                reel.play();
+            }, 1500);
+
+            reel.onended = function() {
+                reel.style.display = 'none';
+                magicScreen.style.display = 'block';
+                bgVideo.play();
+                
+                setTimeout(() => {
+                    magicScreen.style.opacity = '1';
+                    animateText();
+                }, 200);
+            };
+        }
+
+        function animateText() {
+            const sequence = [
+                {id: 'l1', d: 800}, 
+                {id: 'displayName', d: 2000},
+                {id: 'l2', d: 3500}, 
+                {id: 'l3', d: 4700}, 
+                {id: 'l4', d: 5900}
+            ];
+            sequence.forEach(item => {
+                setTimeout(() => {
+                    const el = document.getElementById(item.id);
+                    if(el) {
+                        el.style.animation = "fadeInLine 2.5s forwards";
+                    }
+                }, item.d);
+            });
+        }
+    </script>
+</body>
+</html>
